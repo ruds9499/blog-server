@@ -31,10 +31,15 @@ const PostController = {
 
       response.total = posts.length;
 
-           // reverse post and slice the posts array based on the page number and page size
+      // reverse post and slice the posts array based on the page number and page size
       posts = posts
         .reverse()
         .slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+      // formate the posts createdAt field in date format yyyy-mm-dd without substring method
+      posts = posts.map((post) => {
+        post.createdAt = new Date(post.createdAt).toJSON().split("T")[0];
+        return post;
+      });
       response.posts = posts;
 
       return res.status(200).json(response);
@@ -52,6 +57,9 @@ const PostController = {
       if (!post) {
         return res.status(404).json({ error: "Post not found" });
       }
+      // formate the posts createdAt field in date format yyyy-mm-dd without substring method
+      post.createdAt = new Date(post.createdAt).toJSON().split("T")[0];
+      
       return res.status(200).json(post);
     } catch (err) {
       console.error("Error fetching post by slug", err);
