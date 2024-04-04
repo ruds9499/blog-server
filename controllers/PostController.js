@@ -31,7 +31,10 @@ const PostController = {
 
       response.total = posts.length;
 
-      posts = posts.reverse();
+           // reverse post and slice the posts array based on the page number and page size
+      posts = posts
+        .reverse()
+        .slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
       response.posts = posts;
 
       return res.status(200).json(response);
