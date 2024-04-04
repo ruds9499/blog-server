@@ -31,10 +31,7 @@ const PostController = {
 
       response.total = posts.length;
 
-      posts = posts
-        .sort((a, b) => b.createdAt - a.createdAt)
-        .slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
-
+      posts = posts.reverse();
       response.posts = posts;
 
       return res.status(200).json(response);
